@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/fontAwesome.css}">
+    <script th:src="@{/js/actions.js}"></script>
+    <link crossorigin="anonymous" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css}">
+</head>
+
+<body>
+<div class ="logo1"><a th:href="@{/}"><img th:src="@{img/logo.png}" ></a></div>
+<nav class = "nav-one flex">
+    <ul class="middle flex">
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Language</a></li>
+    </ul>
+    <ul sec:authorize="!isAuthenticated()" class="right flex" >
+        <li><a th:href="@{/login}">Sign In</a></li>
+        <li><a th:href="@{/signup}">Sign Up</a></li>
+    </ul>
+    <ul sec:authorize="isAuthenticated()" class="right flex welcome-user" >
+        <li>
+            <p sec:authorize="isAuthenticated()" style="padding-top: 5px">Welcome <span sec:authentication="name" style="text-decoration: underline";>Username</span></p>
+        </li>
+        <li><a th:href="@{/logout}">Log Out</a></li>
+    </ul>
+</nav>
+<nav class="nav-second flex">
+    <div class="brand-name" onclick="location.href='#';" style="cursor: pointer;">
+        <h1>H-AIRLINES</h1>
+        <p>HANU Flight Booking System</p>
+    </div>
+    <ul class="flex">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/admin}">About</a></li>
+        <li><a th:href="@{/booking}">Booking</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Check in</a></li>
+    </ul>
+</nav>
+<section class="h-100" style="padding: 100px 0px">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                        <form action="#" th:action="'/signup?validate'" th:object="${newUser}" method="post" th:id="signup_form">
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Username*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="text" class="form-control form-control-lg" id="username"
+                                           th:field="${newUser.username}"
+                                           placeholder="Username" />
+                                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                       class="error"></p>
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Password*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="password" id="password" placeholder="Password" name="password"
+                                           class="form-control form-control-lg" th:field="${newUser.password}">
+                                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                       class="error" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Full Name*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="text" id="fullname" placeholder="Full Name" name="fullname"
+                                           class="form-control form-control-lg" th:field="${newUser.fullName}">
+                                    <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"
+                                       class="error" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Phone number*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="number" id="phone" placeholder="0123456789" name="phone"
+                                           class="form-control form-control-lg" th:field="${newUser.phone}">
+                                    <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Gender: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <select class="select form-control form-control-lg">
+                                        <option value="1" disabled>Gender</option>
+                                        <option th:field="${newUser.gender}" th:value="${false}">Female</option>
+                                        <option th:field="${newUser.gender}" th:value="${true}">Male</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Email*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="text" id="email" placeholder="Email" name="email"
+                                           class="form-control form-control-lg" th:field="${newUser.email}">
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Date of birth*: </h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="date" id="dateofbirth" name="dateofbirth"
+                                           class="form-control form-control-lg" th:field="${newUser.dateOfBirth}"
+                                           required></br>
+                                </div>
+                            </div>
+                            <div th:if="*{isExist}" class="error" style="size: 300px; color: red; text-align: center" >Username already exist!</div>
+                            <div class="d-flex justify-content-end pt-3">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <input type="submit" class="btn btn-primary btn-lg" onclick="submit_form()" value="Sign Up">
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <a href="/login" class="btn btn-warning btn-lg ms-2">Log In</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class = "footer">
+    <div class ="container2">
+        <div class = "row2">
+            <div class="special">
+                <h1>Don't Miss Out</h1>
+                <p> Enter email for our latest news and promos.<br>Chance to win free flight coupons.</p>
+                <br>
+                <input type ="email" id="email_input" placeholder="Email address"><br>
+                <input type ="submit" class="submit">
+                <h2>H-AIRLINES</h2>
+                <p>Km9, Nguyen Trai, Nam Tu Liem, Hanoi City</p><br><p>+84 912 783 623</p>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="">About Us</a></li>
+                    <li><a href="">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Social Media</h4>
+                <div class="social-links">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                    <a href=""><i class="fa-brands fa-twitter-square"></i></a>
+                    <a href=""><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Our Services</h4>
+                <ul>
+                    <li><a href="">Manage Flight</a></li>
+                    <li><a href="">Flight Booking</a></li>
+                    <li><a href="">Check In</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="">Contact Us</a></li>
+                    <li><a href="">Refund</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="height:4px;border-width:0;color:gray;background-color:gray">
+        <div class="copy-right">
+            <h3>Copyright @SQA Project 2022</h3>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
